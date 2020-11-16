@@ -25,8 +25,8 @@ const SignUp: React.FC<{
     handleSignUpClose();
   };
 
-  const handleSignUpGoogle = async () => {
-    const result = await socialSignIn();
+  const handleSocialSignIn = async (socialNetwork: 'facebook' | 'google') => {
+    const result = await socialSignIn(socialNetwork);
 
     if (!result.user) {
       console.error('sign up failed');
@@ -48,8 +48,11 @@ const SignUp: React.FC<{
         <Button variant="text" onClick={handleOpenSignIn}>
           Already a member? Sign In
         </Button>
-        <Button variant="text" onClick={handleSignUpGoogle}>
+        <Button variant="text" onClick={() => handleSocialSignIn('google')}>
           Sign Up with Google
+        </Button>
+        <Button variant="text" onClick={() => handleSocialSignIn('facebook')}>
+          Sign Up with Facebook
         </Button>
         <form onSubmit={(e) => handleSubmit(e)}>
           <TextField

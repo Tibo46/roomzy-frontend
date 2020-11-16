@@ -24,14 +24,14 @@ const SignIn: React.FC<{
     console.log('logged in');
     handleSignInClose();
   };
-  const handleSignInGoogle = async () => {
-    const result = await socialSignIn();
+  const handleSocialSignIn = async (socialNetwork: 'facebook' | 'google') => {
+    const result = await socialSignIn(socialNetwork);
 
     if (!result.user) {
-      console.error('sign up failed');
+      console.error('sign in failed');
       return;
     }
-    console.log('sign up success');
+    console.log('sign in success');
     handleSignInClose();
   };
 
@@ -47,8 +47,11 @@ const SignIn: React.FC<{
         <Button variant="text" onClick={handleOpenSignUp}>
           Not a member? Sign up now
         </Button>
-        <Button variant="text" onClick={handleSignInGoogle}>
+        <Button variant="text" onClick={() => handleSocialSignIn('google')}>
           Sign In with Google
+        </Button>
+        <Button variant="text" onClick={() => handleSocialSignIn('facebook')}>
+          Sign In with Facebook
         </Button>
         <form onSubmit={(e) => handleSubmit(e)}>
           <TextField
