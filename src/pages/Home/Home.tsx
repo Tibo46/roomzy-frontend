@@ -1,8 +1,9 @@
 import React from 'react';
+import firebase from 'firebase';
 import { db } from 'services/firebase';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import firebase from 'firebase';
+
 import Button from 'components/MuiOverrides/Button/Button';
 
 const Home: React.FC<{ handleOpenSignUp: () => void }> = ({
@@ -14,6 +15,7 @@ const Home: React.FC<{ handleOpenSignUp: () => void }> = ({
       snapshotListenOptions: { includeMetadataChanges: true },
     }
   );
+
   const [user] = useAuthState(firebase.auth());
 
   return (
