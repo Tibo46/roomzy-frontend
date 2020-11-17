@@ -2,8 +2,8 @@ import React from 'react';
 
 //@ts-ignore
 export const ModalContext = React.createContext<{
-  signInModal: [boolean, React.Dispatch<any>];
-  signUpModal: [boolean, React.Dispatch<any>];
+  signInModal: [boolean, React.Dispatch<boolean>];
+  signUpModal: [boolean, React.Dispatch<boolean>];
 }>();
 
 const ModalProvider: React.FC<{ children: React.ReactChild }> = ({
