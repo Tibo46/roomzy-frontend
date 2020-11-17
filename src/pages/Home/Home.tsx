@@ -31,13 +31,6 @@ const Home: React.FC<{ handleOpenSignUp: () => void }> = ({
       >
         Create a room
       </Button>
-      {/* <button
-        onClick={() => {
-          !user && setIsLoginModalOpen(true);
-        }}
-      >
-        Create new room
-      </button> */}
     </>
   );
 };
