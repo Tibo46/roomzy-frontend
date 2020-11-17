@@ -5,10 +5,9 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import Button from 'components/MuiOverrides/Button/Button';
+import { ModalContext } from 'context/ModalProvider';
 
-const Home: React.FC<{ handleOpenSignUp: () => void }> = ({
-  handleOpenSignUp,
-}) => {
+const Home: React.FC = () => {
   const [value, loading, error] = useDocument(
     db.doc('rooms/iQyRNrz8ULPE08PX37q4'),
     {
@@ -17,6 +16,10 @@ const Home: React.FC<{ handleOpenSignUp: () => void }> = ({
   );
 
   const [user] = useAuthState(firebase.auth());
+
+  const { signUpModal } = React.useContext(ModalContext);
+
+  const [, setIsSignUpModalOpen] = signUpModal;
 
   return (
     <>
@@ -28,7 +31,7 @@ const Home: React.FC<{ handleOpenSignUp: () => void }> = ({
       </p>
       <Button
         onClick={() => {
-          !user && handleOpenSignUp();
+          !user && setIsSignUpModalOpen(true);
         }}
       >
         Create a room

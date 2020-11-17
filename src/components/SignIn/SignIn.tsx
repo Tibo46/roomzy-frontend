@@ -1,17 +1,30 @@
+import React from 'react';
 import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
+
+import { ModalContext } from 'context/ModalProvider';
+import { login, socialSignIn } from 'services/auth';
+
 import Button from 'components/MuiOverrides/Button/Button';
 import Link from 'components/MuiOverrides/Link/Link';
 import TextField from 'components/TextField/TextField';
-import React from 'react';
-import { login, socialSignIn } from 'services/auth';
 
-const SignIn: React.FC<{
-  isOpen: boolean;
-  handleSignInClose: () => void;
-  handleOpenSignUp: () => void;
-}> = ({ isOpen, handleSignInClose, handleOpenSignUp }) => {
+const SignIn: React.FC = () => {
+  const { signInModal, signUpModal } = React.useContext(ModalContext);
+
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  const [signInModalOpen, setSignInModalOpen] = signInModal;
+  const [, setSignUpModalOpen] = signUpModal;
+
+  const handleOpenSignUp = () => {
+    setSignInModalOpen(false);
+    setSignUpModalOpen(true);
+  };
+
+  const handleSignInClose = () => {
+    setSignInModalOpen(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,6 +37,7 @@ const SignIn: React.FC<{
     console.log('logged in');
     handleSignInClose();
   };
+
   const handleSocialSignIn = async (socialNetwork: 'facebook' | 'google') => {
     const result = await socialSignIn(socialNetwork);
 
@@ -37,7 +51,7 @@ const SignIn: React.FC<{
 
   return (
     <Dialog
-      open={isOpen}
+      open={signInModalOpen}
       fullWidth={true}
       maxWidth="lg"
       onClose={handleSignInClose}

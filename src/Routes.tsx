@@ -21,17 +21,7 @@ const Routes = () => {
   return (
     <Switch>
       <Layout>
-        <Route
-          exact
-          path={''}
-          render={() => (
-            <Home
-              handleOpenSignUp={() => {
-                console.log('lol');
-              }}
-            />
-          )}
-        />
+        <Route exact path={''} render={() => <Home />} />
       </Layout>
     </Switch>
   );
