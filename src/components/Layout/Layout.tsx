@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   AppBar,
   createStyles,
@@ -5,13 +6,15 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import Button from 'components/MuiOverrides/Button/Button';
-import SignIn from 'components/SignIn/SignIn';
-import SignUp from 'components/SignUp/SignUp';
-import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { logout } from 'services/auth';
 import { auth } from 'services/firebase';
+
+import { ModalContext } from 'context/ModalProvider';
+
+import Button from 'components/MuiOverrides/Button/Button';
+import SignInModal from 'components/SignIn/SignIn';
+import SignUpModal from 'components/SignUp/SignUp';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -25,8 +28,10 @@ const Layout: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   const classes = useStyles();
-  const [isSignInModalOpen, setIsSignInModalOpen] = React.useState(false);
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = React.useState(false);
+  const { signInModal, signUpModal } = React.useContext(ModalContext);
+
+  const [, setIsSignInModalOpen] = signInModal;
+  const [, setIsSignUpModalOpen] = signUpModal;
 
   const [user] = useAuthState(auth);
 
@@ -60,22 +65,8 @@ const Layout: React.FC<{
           )}
         </Toolbar>
       </AppBar>
-      <SignIn
-        isOpen={isSignInModalOpen}
-        handleSignInClose={() => setIsSignInModalOpen(false)}
-        handleOpenSignUp={() => {
-          setIsSignInModalOpen(false);
-          setIsSignUpModalOpen(true);
-        }}
-      />
-      <SignUp
-        isOpen={isSignUpModalOpen}
-        handleSignUpClose={() => setIsSignUpModalOpen(false)}
-        handleOpenSignIn={() => {
-          setIsSignUpModalOpen(false);
-          setIsSignInModalOpen(true);
-        }}
-      />
+      <SignInModal />
+      <SignUpModal />
       {children}
     </>
   );

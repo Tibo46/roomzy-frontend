@@ -3,10 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ModalContextProvider from './context/ModalProvider';
 
 ReactDOM.render(
   <MUI>
-    <App />
+    <ModalContextProvider>
+      <App />
+    </ModalContextProvider>
   </MUI>,
   document.getElementById('root')
 );

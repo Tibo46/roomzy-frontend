@@ -1,17 +1,30 @@
-import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
-import Button from 'components/MuiOverrides/Button/Button';
-import TextField from 'components/TextField/TextField';
 import React from 'react';
+import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
+
+import { ModalContext } from 'context/ModalProvider';
 import { register, socialSignIn } from 'services/auth';
 
-const SignUp: React.FC<{
-  isOpen: boolean;
-  handleSignUpClose: () => void;
-  handleOpenSignIn: () => void;
-}> = ({ isOpen, handleSignUpClose, handleOpenSignIn }) => {
+import Button from 'components/MuiOverrides/Button/Button';
+import TextField from 'components/TextField/TextField';
+
+const SignUp: React.FC = () => {
+  const { signInModal, signUpModal } = React.useContext(ModalContext);
+
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  const [, setSignInModalOpen] = signInModal;
+  const [signUpModalOpen, setSignUpModalOpen] = signUpModal;
+
+  const handleOpenSignIn = () => {
+    setSignUpModalOpen(false);
+    setSignInModalOpen(true);
+  };
+
+  const handleSignUpClose = () => {
+    setSignUpModalOpen(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,7 +51,7 @@ const SignUp: React.FC<{
 
   return (
     <Dialog
-      open={isOpen}
+      open={signUpModalOpen}
       fullWidth={true}
       maxWidth="lg"
       onClose={handleSignUpClose}
